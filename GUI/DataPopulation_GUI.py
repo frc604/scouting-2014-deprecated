@@ -22,6 +22,9 @@ class DataPopulation(Frame):
         self.style = Style()
         self.style.theme_use("default")
         
+        Scroller = Scrollbar(self.parent)       #TODO: Make scrollbar work
+        Scroller.pack(side=RIGHT, fill = Y)
+        
         #General Info
         #Team Number
         TeamNumberLabel = Label(self.parent, 
@@ -174,7 +177,12 @@ class DataPopulation(Frame):
         AllianceFoulNumberEntry = Entry(self.parent)
         AllianceFoulNumberEntry.pack()
         
-        #
+        #Cards
+        CardNumberLabel = Label(self.parent,
+                                text="Number of Cards")
+        CardNumberLabel.pack()
+        CardNumberEntry = Entry(self.parent)
+        CardNumberEntry.pack()
         
 def Data_Population():
     root_data_population = Tk()
