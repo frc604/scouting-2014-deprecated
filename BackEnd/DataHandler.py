@@ -36,7 +36,7 @@ def _input(_in):
             high: list- [shots attempted, shots fired]
             low: list- [shots attempted, shots fired]
         truss: list- [attempts, successes]
-        catch: int- catch number
+        catch: list- [attempts, successes]
         fouls: list-
             [foul, technical, alliance, cards]
             foul: int- normal fouls
@@ -87,11 +87,18 @@ def getTeam(team, regional):
         [median succesful shots on low goal, standard deviation],
         shooting success percentage]        
     assist: list of floats-
-        [median assists, median cycle time]
+        [[median assists, median cycle time],
+        median succesful catches, catch percentage]]
     truss: list of floats-
         [median truss successes, standard deviation, success percentage]
     power: float- power rating thing
+
+
+    Additional note - all percentages are decimals (less than 1)
     """
+    match_data=getMatchHistory(team, regional)
+    result={} 
+    
 def getRanking(regional):
     """For a given regional name, outputs a huge list of lists of the form:
     [team number, median succesful shots on high goal, medan assists, power rating]"""
