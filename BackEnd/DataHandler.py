@@ -12,6 +12,7 @@ for the match index"""
 
 import pickle
 import os
+import errno
 
 def _input(_in):
     """Takes a dictionary _in with the keys:
@@ -44,7 +45,11 @@ def _input(_in):
             cards: int- yellow cards
         cycles: int- number of cycles
         comments: string- additional comments"""
-    
+    try:
+        os.makedirs('./Data/Raw/')
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
     with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
         pickle.dump(_in, _file)
     with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'rb') as _file:
