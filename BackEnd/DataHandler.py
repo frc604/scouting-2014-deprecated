@@ -3,6 +3,8 @@ Created on Feb 17, 2014
 
 @author: Alan "LizardPuppy" Li
 '''
+import pickle
+
 def _input(_in):
     """Takes a dictionary _in with the keys:
     team: int- team number
@@ -33,12 +35,31 @@ def _input(_in):
             cards: int- yellow cards
         cycles: int- number of cycles
         comments: string- additional comments"""
+    
+    with open('./Data/Raw/'+str(_in['team'])+'_'+str(_in['match']), 'wb') as _file:
+        pickle.dump(_in, _file)
+    with open('./Data/Raw/'+str(_in['team'])+'__index', 'rb') as _file:
+        matches_played = pickle.load(_file)
+    with open('./Data/Raw/'+str(_in['team'])+'__index', 'wb') as _file:
+        pickle.dump(matches_played+[_in['match']], _file)
+    #TODO: write to the actual SQL database (or be lazy and just use this)
+        
 def delete(team, match):
     """Deletes data for a team and match if you screwed up"""
-def getMatchHistory(number):
+
+def getMatchHistory(team):
     """Takes in a team number and spits a list of the dictionaries
     detailed above back out at you"""
-def getTeam(number):
+    
+    match_data=[]
+    with open('./Data/Raw/'+str(team)+'__index', 'rb') as _file:
+        matches_played = pickle.load(_file)
+    for match in matches_played:
+        with open('./Data/Raw/'+str(team)+'_'+str(match), 'rb') as _file:
+            match_data += [pickle.load(_file)]
+    return match_data
+    
+def getTeam(team):
     """Takes in a team number and spits out a dictionary with the keys:
     shooting: list of floats-
         [[median succesful shots on high goal, standard deviation],
