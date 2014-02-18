@@ -166,6 +166,16 @@ class DataPopulation(Frame):
         TechFoulNumberLabel.pack()
         TechFoulNumberEntry = Entry(self.parent)
         TechFoulNumberEntry.pack()
+        
+        #Alliance Fouls
+        AllianceFoulNumberLabel = Label(self.parent,
+                                        text="Number of Alliance Fouls")
+        AllianceFoulNumberLabel.pack()
+        AllianceFoulNumberEntry = Entry(self.parent)
+        AllianceFoulNumberEntry.pack()
+        
+        #
+        
 def Data_Population():
     root_data_population = Tk()
     root_data_population.geometry("750x650+300+300")
