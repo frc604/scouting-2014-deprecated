@@ -33,6 +33,8 @@ def _input(_in):
             cards: int- yellow cards
         cycles: int- number of cycles
         comments: string- additional comments"""
+def delete(team, match):
+    """Deletes data for a team and match if you screwed up"""
 def getMatchHistory(number):
     """Takes in a team number and spits a list of the dictionaries
     detailed above back out at you"""
