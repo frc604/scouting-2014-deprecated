@@ -5,9 +5,9 @@ Created on Feb 17, 2014
 '''
 
 """Data files are stored in ./Data/Raw/ as files with the naming format:
-<reigonal name>_<team number>_<match number>.604
+<regional name>_<team number>_<match number>.604
 for match data and
-<reigonal name>_<team number>__index.604
+<regional name>_<team number>__index.604
 for the match index"""
 
 import pickle
@@ -16,7 +16,7 @@ def _input(_in):
     """Takes a dictionary _in with the keys:
     team: int- team number
     match: int- match number
-    reigonal: string- name of reigonal
+    regional: string- name of regional
     alliance: boolean- True for blue, False for red
     score: list- [blue score, red score]
     auton: list-
@@ -44,31 +44,31 @@ def _input(_in):
         cycles: int- number of cycles
         comments: string- additional comments"""
     
-    with open('./Data/Raw/'+_in['reigonal']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
+    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
         pickle.dump(_in, _file)
-    with open('./Data/Raw/'+_in['reigonal']+'_'+str(_in['team'])+'__index'+'.604', 'rb') as _file:
+    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index'+'.604', 'rb') as _file:
         matches_played = pickle.load(_file)
-    with open('./Data/Raw/'+_in['reigonal']+'_'+str(_in['team'])+'__index'+'.604', 'wb') as _file:
+    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index'+'.604', 'wb') as _file:
         pickle.dump(matches_played+[_in['match']], _file)
     #TODO: write to the actual SQL database (or be lazy and just use this)
         
-def delete(team, match, reigonal):
-    """Deletes data for a team, match, and reigonal if you screwed up"""
+def delete(team, match, regional):
+    """Deletes data for a team, match, and regional if you screwed up"""
 
-def getMatchHistory(team, reigonal):
-    """Takes in a team number and reigonal name (string) and spits a list of the dictionaries
+def getMatchHistory(team, regional):
+    """Takes in a team number and regional name (string) and spits a list of the dictionaries
     detailed above back out at you"""
     
     match_data=[]
-    with open('./Data/Raw/'+reigonal+'_'+str(team)+'__index.604', 'rb') as _file:
+    with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
         matches_played = pickle.load(_file)
     for match in matches_played:
-        with open('./Data/Raw/'+reigonal+'_'+str(team)+'_'+str(match)+'.604', 'rb') as _file:
+        with open('./Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604', 'rb') as _file:
             match_data += [pickle.load(_file)]
     return match_data
     
-def getTeam(team, reigonal):
-    """Takes in a team number and reigonal name and spits out a dictionary with the keys:
+def getTeam(team, regional):
+    """Takes in a team number and regional name and spits out a dictionary with the keys:
     shooting: list of floats-
         [[median succesful shots on high goal, standard deviation],
         [median succesful shots on low goal, standard deviation],
@@ -79,6 +79,6 @@ def getTeam(team, reigonal):
         [median truss successes, standard deviation, success percentage]
     power: float- power rating thing
     """
-def getRanking(reigonal):
-    """For a given reigonal name, outputs a huge list of lists of the form:
+def getRanking(regional):
+    """For a given regional name, outputs a huge list of lists of the form:
     [team number, median succesful shots on high goal, medan assists, power rating]"""
