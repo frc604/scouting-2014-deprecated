@@ -11,6 +11,7 @@ for match data and
 for the match index"""
 
 import pickle
+import os
 
 def _input(_in):
     """Takes a dictionary _in with the keys:
@@ -46,14 +47,21 @@ def _input(_in):
     
     with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
         pickle.dump(_in, _file)
-    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index'+'.604', 'rb') as _file:
+    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'rb') as _file:
         matches_played = pickle.load(_file)
-    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index'+'.604', 'wb') as _file:
+    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'wb') as _file:
         pickle.dump(matches_played+[_in['match']], _file)
     #TODO: write to the actual SQL database (or be lazy and just use this)
         
 def delete(team, match, regional):
     """Deletes data for a team, match, and regional if you screwed up"""
+    
+    os.remove('./Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604')
+    with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
+        matches_played = pickle.load(_file)
+    matches_played.remove(match)
+    with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'wb') as _file:
+        pickle.dump(matches_played, _file)
 
 def getMatchHistory(team, regional):
     """Takes in a team number and regional name (string) and spits a list of the dictionaries
