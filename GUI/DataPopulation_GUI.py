@@ -189,9 +189,17 @@ class DataPopulation(Frame):
         CardNumberEntry = Entry(self.parent)
         CardNumberEntry.grid(row=18, column=4)
         
+        #Comments
+        #TODO: Separate and Label Comments Section
+        
+        CommentsLabel = Label(self.parent, text="Comments")
+        CommentsLabel.grid(row=19, column=1)
+        CommentsText = Text(self.parent)
+        CommentsText.grid(row=20, column=1, columnspan=3, rowspan=2, sticky=E+W+N+S)
+        
 def Data_Population():
     root_data_population = Tk()
-    root_data_population.geometry("850x850+300+300")
+    root_data_population.geometry("1050x730+300+300")
     app_data_population = DataPopulation(root_data_population)
     root_data_population.mainloop()
     
