@@ -1,10 +1,20 @@
-'''
-Created on Feb 16, 2014
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-@author: dev
-'''
+"""
+ZetCode Tkinter tutorial
 
-from Tkinter import Tk, Frame, Menu, Entry
+In this script, we use the grid manager
+to create a skeleton of a calculator.
+
+author: Jan Bodnar
+last modified: December 2010
+website: www.zetcode.com
+"""
+
+from Tkinter import Tk, W, E
+from ttk import Frame, Button, Label, Style
+from ttk import Entry
 
 
 class Example(Frame):
@@ -18,35 +28,73 @@ class Example(Frame):
         
     def initUI(self):
       
-        self.parent.title("Submenu")
+        self.parent.title("Calculator")
         
-        menubar = Menu(self.parent)
-        self.parent.config(menu=menubar)
+        Style().configure("TButton", padding=(0, 5, 0, 5), 
+            font='serif 10')
         
-        fileMenu = Menu(menubar)       
+        self.columnconfigure(0, pad=3)
+        self.columnconfigure(1, pad=3)
+        self.columnconfigure(2, pad=3)
+        self.columnconfigure(3, pad=3)
         
-        submenu = Menu(fileMenu)
-        submenu.add_command(label="New feed")
-        submenu.add_command(label="Bookmarks")
-        submenu.add_command(label="Mail")
-        fileMenu.add_cascade(label='Import', menu=submenu, underline=0)
+        self.rowconfigure(0, pad=3)
+        self.rowconfigure(1, pad=3)
+        self.rowconfigure(2, pad=3)
+        self.rowconfigure(3, pad=3)
+        self.rowconfigure(4, pad=3)
         
-        fileMenu.add_separator()
+        entry = Entry(self)
+        entry.grid(row=0, columnspan=4, sticky=W+E)
+        cls = Button(self, text="Cls")
+        cls.grid(row=1, column=0)
+        bck = Button(self, text="Back")
+        bck.grid(row=1, column=1)
+        lbl = Button(self)
+        lbl.grid(row=1, column=2)    
+        clo = Button(self, text="Close")
+        clo.grid(row=1, column=3)        
+        sev = Button(self, text="7")
+        sev.grid(row=2, column=0)        
+        eig = Button(self, text="8")
+        eig.grid(row=2, column=1)         
+        nin = Button(self, text="9")
+        nin.grid(row=2, column=2) 
+        div = Button(self, text="/")
+        div.grid(row=2, column=3) 
         
-        fileMenu.add_command(label="Exit", underline=0, command=self.onExit)
-        menubar.add_cascade(label="File", underline=0, menu=fileMenu)       
+        fou = Button(self, text="4")
+        fou.grid(row=3, column=0)        
+        fiv = Button(self, text="5")
+        fiv.grid(row=3, column=1)         
+        six = Button(self, text="6")
+        six.grid(row=3, column=2) 
+        mul = Button(self, text="*")
+        mul.grid(row=3, column=3)    
         
-        TeamNumberEntry = Entry(self, ) 
-                
-
-    def onExit(self):
-        self.quit()
-
+        one = Button(self, text="1")
+        one.grid(row=4, column=0)        
+        two = Button(self, text="2")
+        two.grid(row=4, column=1)         
+        thr = Button(self, text="3")
+        thr.grid(row=4, column=2) 
+        mns = Button(self, text="-")
+        mns.grid(row=4, column=3)         
+        
+        zer = Button(self, text="0")
+        zer.grid(row=5, column=0)        
+        dot = Button(self, text=".")
+        dot.grid(row=5, column=1)         
+        equ = Button(self, text="=")
+        equ.grid(row=5, column=2) 
+        pls = Button(self, text="+")
+        pls.grid(row=5, column=3)
+        
+        self.pack()
 
 def main():
   
     root = Tk()
-    root.geometry("250x150+300+300")
     app = Example(root)
     root.mainloop()  
 

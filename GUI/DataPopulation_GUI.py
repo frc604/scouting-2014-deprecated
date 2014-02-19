@@ -22,171 +22,176 @@ class DataPopulation(Frame):
         self.style = Style()
         self.style.theme_use("default")
         
-        Scroller = Scrollbar(self.parent)       #TODO: Make scrollbar work
-        Scroller.pack(side=RIGHT, fill = Y)
-        
         #General Info
+        #TODO: Label General Info
+        
         #Team Number
         TeamNumberLabel = Label(self.parent, 
                                 text="Team Number")
-        TeamNumberLabel.pack()
+        TeamNumberLabel.grid(row=1,column=1)
         TeamNumberEntry = Entry(self.parent)
-        TeamNumberEntry.pack()
+        TeamNumberEntry.grid(row=2,column=1)
         
         #Match Number
         MatchNumberLabel = Label(self.parent, 
                                  text="Match Number")
-        MatchNumberLabel.pack()
+        MatchNumberLabel.grid(row=1,column=2)
         MatchNumberEntry = Entry(self.parent)
-        MatchNumberEntry.pack()
+        MatchNumberEntry.grid(row=2,column=2)
         
         #Alliance
         AllianceLabel = Label(self.parent, 
-                              text="Alliance (True for blue,False for Red)") 
-        AllianceLabel.pack()
+                              text="Alliance(True for b,False for r)") 
+        AllianceLabel.grid(row=1, column=3)
         AllianceEntry = Entry(self.parent)
-        AllianceEntry.pack()
-        
+        AllianceEntry.grid(row=2, column=3)
+
+
         #Alliance Scores
         BlueAllianceScoreLabel = Label(self.parent, 
                                        text="Blue Alliance Score")
-        BlueAllianceScoreLabel.pack()
+        BlueAllianceScoreLabel.grid(row=3, column=1)
         BlueAllianceScoreEntry = Entry(self.parent)
-        BlueAllianceScoreEntry.pack()
+        BlueAllianceScoreEntry.grid(row=4, column=1)
         
         RedAllianceScoreLabel = Label(self.parent, 
                                       text="Red Alliance Score")
-        RedAllianceScoreLabel.pack()
+        RedAllianceScoreLabel.grid(row=3, column=2)
         RedAllianceScoreEntry = Entry(self.parent)
-        RedAllianceScoreEntry.pack()
+        RedAllianceScoreEntry.grid(row=4, column=2)
         
         #Autonomous
+        #TODO: Separate and label the Auton fields
+        
         #Auton Driving
         AutonDrivingLabel = Label(self.parent,
                                   text="Auton Drive Forward")
-        AutonDrivingLabel.pack()
+        AutonDrivingLabel.grid(row=5, column=1)
         AutonDrivingEntry = Entry(self.parent)
-        AutonDrivingEntry.pack()
+        AutonDrivingEntry.grid(row=6, column=1)
         
         #Auton Shooting Position(High/Low)
         AutonShootingPosLabel = Label(self.parent,
-                                      text="Auton Shooting Goal High(True)/Low(False)")
-        AutonShootingPosLabel.pack()
+                                      text="Auton Shooting Goal True/False")     #True being High and False being Low
+        AutonShootingPosLabel.grid(row=5, column=2)
         AutonShootingPosEntry = Entry(self.parent)
-        AutonShootingPosEntry.pack()
+        AutonShootingPosEntry.grid(row=6, column=2)
         
         #Auton Shooting Success/Fail
         AutonShootingSFLabel = Label(self.parent,
-                                     text="Auton Shooting Success(True)/Fail(False")
-        AutonShootingSFLabel.pack()
+                                     text="Auton Shooting SF True/False")    #True being Success and False being Fail
+        AutonShootingSFLabel.grid(row=5, column=3)
         AutonShootingSFEntry = Entry(self.parent)
-        AutonShootingSFEntry.pack()
+        AutonShootingSFEntry.grid(row=6, column=3)
         
         #Auton Shooting Hot/Not
         AutonShootingHNLabel = Label(self.parent,
-                                     text="Auton Shooting Hot(True)/Not(False")
-        AutonShootingHNLabel.pack()
+                                     text="Auton Shooting HN True/False")    #True being Hot, False being Not
+        AutonShootingHNLabel.grid(row=5, column=4)
         AutonShootingHNEntry = Entry(self.parent)
-        AutonShootingHNEntry.pack()
-        
+        AutonShootingHNEntry.grid(row=6, column=4)
+                
         #Teleop
+        #TODO: Separate and Label the Teleop secion
         #Assist Number
         TeleopAssistNumberLabel = Label(self.parent,
                                         text="Number of Assists")
-        TeleopAssistNumberLabel.pack()
+        TeleopAssistNumberLabel.grid(row=7, column=1)
         TeleopAssistNumberEntry = Entry(self.parent)
-        TeleopAssistNumberEntry.pack()
+        TeleopAssistNumberEntry.grid(row=8, column=1)
         
         #Teleop Shooting High
         #Teleop Shooting High Attempted
         TeleopHShotsAttemptedLabel = Label(self.parent,
                                            text="Number of High Shots Attempted")
-        TeleopHShotsAttemptedLabel.pack()
+        TeleopHShotsAttemptedLabel.grid(row=9, column=1)
         TeleopHShotsAttemptedEntry = Entry(self.parent)
-        TeleopHShotsAttemptedEntry.pack()
+        TeleopHShotsAttemptedEntry.grid(row=10, column=1)
         
         #Teleop Shooting High Successes
         TeleopHShotsMadeLabel = Label(self.parent,
                                       text="Number of High Shots Made")
-        TeleopHShotsMadeLabel.pack()
+        TeleopHShotsMadeLabel.grid(row=9, column=2)
         TeleopHShotsMadeEntry = Entry(self.parent)
-        TeleopHShotsMadeEntry.pack()
+        TeleopHShotsMadeEntry.grid(row=10, column=2)
         
         #Teleop Shooting Low
         #Teleop Shooting Low Attempted
         TeleopLShotsAttemptedLabel = Label(self.parent,
                                            text="Number of Low Shots Attempted")
-        TeleopLShotsAttemptedLabel.pack()
+        TeleopLShotsAttemptedLabel.grid(row=11, column=1)
         TeleopLShotsAttemptedEntry = Entry(self.parent)
-        TeleopLShotsAttemptedEntry.pack()
+        TeleopLShotsAttemptedEntry.grid(row=12, column=1)
         
         #Teleop Shooting Low Successes
         TeleopLShotsMadeLabel = Label(self.parent,
                                       text="Number of Low Shots Made")
-        TeleopLShotsMadeLabel.pack()
+        TeleopLShotsMadeLabel.grid(row=11, column=2)
         TeleopLShotsMadeEntry = Entry(self.parent)
-        TeleopLShotsMadeEntry.pack()
+        TeleopLShotsMadeEntry.grid(row=12, column=2)
         
         #Teleop Truss
         #Teleop Truss Attempt Number
         TeleopTrussAttemptedLabel = Label(self.parent,
                                            text="Number of Truss Attempts")
-        TeleopTrussAttemptedLabel.pack()
+        TeleopTrussAttemptedLabel.grid(row=13, column=1)
         TeleopTrussAttemptedEntry = Entry(self.parent)
-        TeleopTrussAttemptedEntry.pack()
+        TeleopTrussAttemptedEntry.grid(row=14, column=1)
         
         #Teleop Truss Made
         TeleopTrussMadeLabel = Label(self.parent,
                                       text="Number of Truss Successes")
-        TeleopTrussMadeLabel.pack()
+        TeleopTrussMadeLabel.grid(row=13, column=2)
         TeleopTrussMadeEntry = Entry(self.parent)
-        TeleopTrussMadeEntry.pack()
+        TeleopTrussMadeEntry.grid(row=14, column=2)
         
+        #Catches
         #Teleop Catches Attempted
         TeleopCatchesAttemptedLabel = Label(self.parent,
                                            text="Number of Catches Attempted")
-        TeleopCatchesAttemptedLabel.pack()
+        TeleopCatchesAttemptedLabel.grid(row=15, column=1)
         TeleopCatchesAttemptedEntry = Entry(self.parent)
-        TeleopCatchesAttemptedEntry.pack()
+        TeleopCatchesAttemptedEntry.grid(row=16, column=1)
         
         #Teleop Catches Made
         TeleopCatchesMadeLabel = Label(self.parent,
                                       text="Number of Catches Made")
-        TeleopCatchesMadeLabel.pack()
+        TeleopCatchesMadeLabel.grid(row=15, column=2)
         TeleopCatchesMadeEntry = Entry(self.parent)
-        TeleopCatchesMadeEntry.pack()
+        TeleopCatchesMadeEntry.grid(row=16, column=2)
         
+        #Separate and Label Fouls section
         #Fouls
         FoulNumberLabel = Label(self.parent,
-                                text="Number of Fouls")
-        FoulNumberLabel.pack()
+                                text="Fouls")
+        FoulNumberLabel.grid(row=17, column=1)
         FoulNumberEntry = Entry(self.parent)
-        FoulNumberEntry.pack()
+        FoulNumberEntry.grid(row=18, column=1)
         
         #Technical Fouls
         TechFoulNumberLabel = Label(self.parent,
-                                    text="Number of Technical Fouls")
-        TechFoulNumberLabel.pack()
+                                    text="Technical Fouls")
+        TechFoulNumberLabel.grid(row=17, column=2)
         TechFoulNumberEntry = Entry(self.parent)
-        TechFoulNumberEntry.pack()
+        TechFoulNumberEntry.grid(row=18, column=2)
         
         #Alliance Fouls
         AllianceFoulNumberLabel = Label(self.parent,
-                                        text="Number of Alliance Fouls")
-        AllianceFoulNumberLabel.pack()
+                                        text="Alliance Fouls")
+        AllianceFoulNumberLabel.grid(row=17,column=3)
         AllianceFoulNumberEntry = Entry(self.parent)
-        AllianceFoulNumberEntry.pack()
+        AllianceFoulNumberEntry.grid(row=18,column=3)
         
         #Cards
         CardNumberLabel = Label(self.parent,
-                                text="Number of Cards")
-        CardNumberLabel.pack()
+                                text="Cards")
+        CardNumberLabel.grid(row=17, column=4)
         CardNumberEntry = Entry(self.parent)
-        CardNumberEntry.pack()
+        CardNumberEntry.grid(row=18, column=4)
         
 def Data_Population():
     root_data_population = Tk()
-    root_data_population.geometry("750x650+300+300")
+    root_data_population.geometry("850x850+300+300")
     app_data_population = DataPopulation(root_data_population)
     root_data_population.mainloop()
     
