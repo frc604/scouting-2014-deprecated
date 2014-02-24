@@ -137,7 +137,7 @@ def getTruss(data, position):
         out[0]+=[element['teleop']['truss'][0]]
         out[1]+=[element['teleop']['truss'][1]]
     return out
-
+    
 def calcPower(data):
 
 def calcSuccesses(data):

@@ -53,6 +53,10 @@ class ScoutingWrapper(Frame):
                                    width=12)         
         teamRankingButton.pack()
         
+        teamEntryDeletionButton = Button(self,
+                                         text="Match Deletion",
+                                         width=12)    #TODO: Make TeamEntryDeletion GUI
+        teamEntryDeletionButton.pack()
         #Formatting to look pretty
 
         frame2 = Frame(self, 

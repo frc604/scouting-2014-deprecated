@@ -6,9 +6,11 @@ Created on Feb 17, 2014
 from Tkinter import *
 from ttk import *
 import tkMessageBox
+from BackEnd.DataHandler import *
 
 class DataPopulation(Frame):
-    def __init__(self,parent):
+    def __init__(self,
+                 parent):
         
         Frame.__init__(self,
                        parent)
@@ -77,7 +79,7 @@ class DataPopulation(Frame):
         #TODO: Separate and label the Auton fields
         AutonomousLabel = Label(self.parent,
                                 text="Autonomous")
-        AutonomousLabel.grid(row=7,column=10)
+        AutonomousLabel.grid(row=7,column=1)
         #Auton Driving
         AutonDrivingLabel = Label(self.parent,
                                   text="Auton Drive Forward")
@@ -221,8 +223,82 @@ class DataPopulation(Frame):
         CommentsText = Text(self.parent)
         CommentsText.grid(row=27, column=1, columnspan=3, rowspan=1)
         
-        GoDieInAHoleButton = Button(self.parent,text = "Go Die In a Hole", command = self.parent.quit)
+        GoDieInAHoleButton = Button(self.parent,text="Go Die In a Hole", command=self.parent.quit)
         GoDieInAHoleButton.grid(row=27, column= 5)
+        
+        SubmitButton = Button(self.parent, text="Submit") # TODO: make function bundling all the entry population functions
+        SubmitButton.grid(row=26, column=5)
+        
+    def EntrySubmission(self, 
+                        TeamNumberEntry, 
+                        MatchNumberEntry, 
+                        AllianceEntry, 
+                        BlueAllianceScoreEntry, 
+                        RedAllianceScoreEntry, 
+                        AutonDrivingEntry,
+                        AutonShootingPosEntry,
+                        AutonShootingSFEntry,
+                        AutonShootingHNEntry,
+                        TeleopAssistNumberEntry,
+                        TeleopHShotsAttemptedEntry,
+                        TeleopHShotsMadeEntry,
+                        TeleopLShotsAttemptedEntry,
+                        TeleopLShotsMadeEntry,
+                        TeleopTrussAttemptedEntry,
+                        TeleopTrussMadeEntry,
+                        TeleopCatchesAttemptedEntry,
+                        TeleopCatchesMadeEntry,
+                        FoulNumberEntry,
+                        TechFoulNumberEntry,
+                        AllianceFoulNumberEntry,
+                        CardNumberEntry,
+                        CommentsText):
+        
+        TeamNumber = TeamNumberEntry.get()
+        MatchNumber = MatchNumberEntry.get()
+        Alliance = AllianceEntry.get()
+        BlueAllianceScore = BlueAllianceScoreEntry.get()
+        RedAllianceScore = RedAllianceScoreEntry.get()
+        AutonDriving = AutonDrivingEntry.get()
+        AutonShootingPos = AutonShootingPosEntry.get()
+        AutonShootingSF = AutonShootingSFEntry.get()
+        AutonShootingHN = AutonShootingHNEntry.get()
+        TeleopAssistNumber = TeleopAssistNumberEntry()
+        TeleopHShotsAttempted = TeleopHShotsAttemptedEntry.get()
+        TeleopHShotsMade = TeleopHShotsMadeEntry.get()
+        TeleopLShotsAttempted = TeleopLShotsAttemptedEntry.get()
+        TeleopLShotsMade = TeleopLShotsMadeEntry.get()
+        TeleopTrussAttempted = TeleopTrussAttemptedEntry.get()
+        TeleopTrussMade = TeleopTrussMadeEntry.get()
+        TeleopCatchesAttempted = TeleopCatchesAttemptedEntry.get()
+        TeleopCatchesMade = TeleopCatchesMadeEntry.get()
+        FoulNumber = FoulNumberEntry.get()
+        TechFoulNumber = TechFoulNumberEntry.get()
+        AllianceFoulNumber = AllianceFoulNumberEntry.get()
+        CardNumber = CardNumberEntry.get()
+        Comments = CommentsText.get()
+        Cycles = TeleopHShotsMade + TeleopLShotsMade
+
+        BigAssDictionary = {'team':TeamNumber, 
+                            'match':MatchNumber,
+                            'regional':'TEST',     #TODO: Change the Regional Value
+                            'alliance':Alliance,
+                            'score':[BlueAllianceScore,
+                                     RedAllianceScore],
+                            'auton':[AutonDriving,
+                                     [AutonShootingPos, 
+                                      AutonShootingSF, 
+                                      AutonShootingHN]],
+                            'teleop':{'assists':TeleopAssistNumber,
+                                      'shots':[[TeleopHShotsAttempted,TeleopHShotsMade],
+                                               [TeleopLShotsAttempted,TeleopLShotsMade]],
+                                      'truss':[TeleopTrussAttempted,TeleopTrussMade],
+                                      'catch':[TeleopCatchesAttempted,TeleopCatchesMade],
+                                      'fouls':[FoulNumber,TechFoulNumber,AllianceFoulNumber,CardNumber],
+                                      'cycles':Cycles,
+                                      'comments':Comments}}
+        
+        DataHandler._input(BigAssDictionary)
         
 def Data_Population():
     root_data_population = Tk()
