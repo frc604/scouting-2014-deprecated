@@ -138,7 +138,7 @@ def getTruss(data, position):
         out[1]+=[element['teleop']['truss'][1]]
     return out
     
-def calcPower(data):
+#def calcPower(data):
 
 def calcSuccesses(data):
     """data is of form [[list of attempts], [list of succeses]], outputs [adjusted succeses, standard deviation, success percentage]"""
@@ -149,7 +149,7 @@ def calcSuccesses(data):
     for element in data[1]:
         succeses+=element
     percentage=findP(attempts, succeses, 1, 0, 0.000001)
-    return([median(data[0])*percentage, std(data[1]), percentage)
+    return([median(data[0])*percentage, std(data[1]), percentage])
 
 def findP(n, q, nCq, upper, lower, tolerance):
     """binary seraches for p using the following formula:

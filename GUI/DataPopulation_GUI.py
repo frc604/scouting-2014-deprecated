@@ -6,7 +6,7 @@ Created on Feb 17, 2014
 from Tkinter import *
 from ttk import *
 import tkMessageBox
-from BackEnd.DataHandler import *
+import BackEnd.DataHandler
 
 class DataPopulation(Frame):
     def __init__(self,
@@ -220,13 +220,35 @@ class DataPopulation(Frame):
         
         CommentsLabel = Label(self.parent, text="Comments")
         CommentsLabel.grid(row=26, column=1)
-        CommentsText = Text(self.parent)
-        CommentsText.grid(row=27, column=1, columnspan=3, rowspan=1)
+        CommentsEntry = Entry(self.parent)
+        CommentsEntry.grid(row=27, column=1, columnspan=3, rowspan=1)
         
         GoDieInAHoleButton = Button(self.parent,text="Go Die In a Hole", command=self.parent.quit)
         GoDieInAHoleButton.grid(row=27, column= 5)
         
-        SubmitButton = Button(self.parent, text="Submit") # TODO: make function bundling all the entry population functions
+        SubmitButton = Button(self.parent, text="Submit", command=self.EntrySubmission(TeamNumberEntry, 
+                                                                                       MatchNumberEntry, 
+                                                                                       AllianceEntry, 
+                                                                                       BlueAllianceScoreEntry, 
+                                                                                       RedAllianceScoreEntry, 
+                                                                                       AutonDrivingEntry,
+                                                                                       AutonShootingPosEntry,
+                                                                                       AutonShootingSFEntry,
+                                                                                       AutonShootingHNEntry,
+                                                                                       TeleopAssistNumberEntry,
+                                                                                       TeleopHShotsAttemptedEntry,
+                                                                                       TeleopHShotsMadeEntry,
+                                                                                       TeleopLShotsAttemptedEntry,
+                                                                                       TeleopLShotsMadeEntry,
+                                                                                       TeleopTrussAttemptedEntry,
+                                                                                       TeleopTrussMadeEntry,
+                                                                                       TeleopCatchesAttemptedEntry,
+                                                                                       TeleopCatchesMadeEntry,
+                                                                                       FoulNumberEntry,
+                                                                                       TechFoulNumberEntry,
+                                                                                       AllianceFoulNumberEntry,
+                                                                                       CardNumberEntry,
+                                                                                       CommentsEntry))
         SubmitButton.grid(row=26, column=5)
         
     def EntrySubmission(self, 
@@ -252,7 +274,7 @@ class DataPopulation(Frame):
                         TechFoulNumberEntry,
                         AllianceFoulNumberEntry,
                         CardNumberEntry,
-                        CommentsText):
+                        CommentsEntry):
         
         TeamNumber = TeamNumberEntry.get()
         MatchNumber = MatchNumberEntry.get()
@@ -263,7 +285,7 @@ class DataPopulation(Frame):
         AutonShootingPos = AutonShootingPosEntry.get()
         AutonShootingSF = AutonShootingSFEntry.get()
         AutonShootingHN = AutonShootingHNEntry.get()
-        TeleopAssistNumber = TeleopAssistNumberEntry()
+        TeleopAssistNumber = TeleopAssistNumberEntry.get()
         TeleopHShotsAttempted = TeleopHShotsAttemptedEntry.get()
         TeleopHShotsMade = TeleopHShotsMadeEntry.get()
         TeleopLShotsAttempted = TeleopLShotsAttemptedEntry.get()
@@ -276,7 +298,7 @@ class DataPopulation(Frame):
         TechFoulNumber = TechFoulNumberEntry.get()
         AllianceFoulNumber = AllianceFoulNumberEntry.get()
         CardNumber = CardNumberEntry.get()
-        Comments = CommentsText.get()
+        Comments = CommentsEntry.get()
         Cycles = TeleopHShotsMade + TeleopLShotsMade
 
         BigAssDictionary = {'team':TeamNumber, 
@@ -298,7 +320,7 @@ class DataPopulation(Frame):
                                       'cycles':Cycles,
                                       'comments':Comments}}
         
-        DataHandler._input(BigAssDictionary)
+        BackEnd.DataHandler._input(BigAssDictionary)
         
 def Data_Population():
     root_data_population = Tk()
