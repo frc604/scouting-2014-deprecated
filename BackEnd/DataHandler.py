@@ -59,8 +59,8 @@ def _input(_in):
     try:
         with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'rb') as _file:
             matches_played = pickle.load(_file)
-        except IOError:
-            matches_played = []
+    except IOError:
+        matches_played = []
     with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'wb') as _file:
         pickle.dump(matches_played+[_in['match']], _file)
         
