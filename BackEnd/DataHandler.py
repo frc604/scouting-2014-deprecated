@@ -4,7 +4,7 @@ Created on Feb 17, 2014
 @author: Alan "LizardPuppy" Li
 '''
 
-"""Data files are stored in ./Data/Raw/ as files with the naming format:
+"""Data files are stored in ../BackEnd/Data/Raw/ as files with the naming format:
 <regional name>_<team number>_<match number>.604
 for match data and
 <regional name>_<team number>__index.604
@@ -50,30 +50,30 @@ def _input(_in):
         cycles: int- number of cycles
         comments: string- additional comments"""
     try:
-        os.makedirs('./Data/Raw/')
+        os.makedirs('../BackEnd/Data/Raw/')
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             raise
-    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
+    with open('../BackEnd/Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
         pickle.dump(_in, _file)
     try:
-        with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'rb') as _file:
+        with open('../BackEnd/Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'rb') as _file:
             matches_played = pickle.load(_file)
     except IOError:
         matches_played = []
-    with open('./Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'wb') as _file:
+    with open('../BackEnd/Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'wb') as _file:
         pickle.dump(matches_played+[_in['match']], _file)
         
 def delete(team, match, regional):
     """Deletes data for a team, match, and regional if you screwed up. Returns 1 if it works and 0 if it didn't (no file found)."""
     try:
-        os.remove('./Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604')
+        os.remove('../BackEnd/Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604')
     except:
         return 0
-    with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
+    with open('../BackEnd/Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
         matches_played = pickle.load(_file)
     matches_played.remove(match)
-    with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'wb') as _file:
+    with open('../BackEnd/Data/Raw/'+regional+'_'+str(team)+'__index.604', 'wb') as _file:
         pickle.dump(matches_played, _file)
     return 1
 
@@ -82,12 +82,12 @@ def getMatchHistory(team, regional):
     detailed above back out at you, returns and empty list if there are no matches."""
     match_data=[]
     try:
-        with open('./Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
+        with open('../BackEnd/Data/Raw/'+regional+'_'+str(team)+'__index.604', 'rb') as _file:
             matches_played = pickle.load(_file)
     except:
         return match_data
     for match in matches_played:
-        with open('./Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604', 'rb') as _file:
+        with open('../BackEnd/Data/Raw/'+regional+'_'+str(team)+'_'+str(match)+'.604', 'rb') as _file:
             match_data += [pickle.load(_file)]
     return match_data
     

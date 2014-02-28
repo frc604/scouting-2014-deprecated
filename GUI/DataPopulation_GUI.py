@@ -5,8 +5,8 @@ Created on Feb 17, 2014
 '''
 from Tkinter import *
 from ttk import *
-import tkMessageBox
 import BackEnd.DataHandler
+from UsefulFunctions import combine_funcs
 
 class DataPopulation(Frame):
     def __init__(self,
@@ -25,7 +25,6 @@ class DataPopulation(Frame):
         self.style.theme_use("default")
         
         #General Info
-        #TODO: Label General Info
         GeneralInfoLabel = Label(self.parent,
                                  text="General Info")
         GeneralInfoLabel.grid(row=1,
@@ -76,7 +75,6 @@ class DataPopulation(Frame):
                                    column=2)
         
         #Autonomous
-        #TODO: Separate and label the Auton fields
         AutonomousLabel = Label(self.parent,
                                 text="Autonomous")
         AutonomousLabel.grid(row=7,column=1)
@@ -113,7 +111,6 @@ class DataPopulation(Frame):
         AutonShootingHNEntry.grid(row=9, column=4)
                 
         #Teleop
-        #TODO: Separate and Label the Teleop secion
         TeleopLabel = Label(self.parent,
                             text="Teleop")
         TeleopLabel.grid(row=11,
@@ -186,7 +183,6 @@ class DataPopulation(Frame):
         TeleopCatchesMadeEntry = Entry(self.parent)
         TeleopCatchesMadeEntry.grid(row=21, column=2)
         
-        #TODO: Separate and Label Fouls section
         #Fouls
         FoulNumberLabel = Label(self.parent,
                                 text="Fouls")
@@ -216,15 +212,12 @@ class DataPopulation(Frame):
         CardNumberEntry.grid(row=24, column=4)
         
         #Comments
-        #TODO: Separate and Label Comments Section
+        
         
         CommentsLabel = Label(self.parent, text="Comments")
         CommentsLabel.grid(row=26, column=1)
         CommentsEntry = Entry(self.parent)
         CommentsEntry.grid(row=27, column=1, columnspan=3, rowspan=1)
-        
-        GoDieInAHoleButton = Button(self.parent,text="Go Die In a Hole", command=self.parent.quit)
-        GoDieInAHoleButton.grid(row=27, column= 5)
         
         SubmitButton = Button(self.parent, text="Submit", command=self.EntrySubmission(TeamNumberEntry, 
                                                                                        MatchNumberEntry, 
@@ -251,6 +244,10 @@ class DataPopulation(Frame):
                                                                                        CommentsEntry))
         SubmitButton.grid(row=26, column=5)
         
+        CloseButton = Button(self.parent,text="Close", command=self.parent.quit)
+        CloseButton.grid(row=28, column=5)
+        
+    
     def EntrySubmission(self, 
                         TeamNumberEntry, 
                         MatchNumberEntry, 
