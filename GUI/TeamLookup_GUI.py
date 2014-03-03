@@ -15,6 +15,8 @@ class TeamLookup(Frame):
         self.parent.title("Team Lookup")
         self.style = Style()
         self.style.theme_use("default")
+        
+        
     
 def Team_Lookup():
     root_team_lookup = Tk()

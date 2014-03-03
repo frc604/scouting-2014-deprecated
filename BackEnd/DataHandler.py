@@ -115,8 +115,12 @@ def getTeam(team, regional):
     
 def getRanking(regional):
     """For a given regional name, outputs a huge list of lists of the form:
-    [team number, median attempted shots on high goal*shooting success percentage,
-    meduan attempted catches*catch success percentage, power rating]"""
+    [[[team number, median cycle number],...]
+    [[team number, median assists number],...]
+    [[team number, median truss number],...]
+    [[team number, median attempted shots on high goal*shooting success percentage],...]
+    [[team number, median catches],...]]
+    """
 
 
 
@@ -175,7 +179,6 @@ def findP(n, q, nCq, upper, lower, tolerance):
 
 def integrand(x, n, q):
     return (x**q)*(1-x)**(n-q)
-
 
 
 
