@@ -54,6 +54,14 @@ def _input(_in):
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             raise
+    try:
+        with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'rb') as _file:
+            teams_in_reigonal = pickle.load(_file)
+    except IOError:
+        teams_in_reigonal = []
+    teams_in_reigonal=list(set(teams_in_reigonal+[_in['team']]))
+    with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'wb') as _file:
+        pickle.dump(teams_in_reigonal,_file)
     with open('../BackEnd/Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'_'+str(_in['match'])+'.604', 'wb') as _file:
         pickle.dump(_in, _file)
     try:
@@ -181,14 +189,33 @@ def getTeam(team, regional):
     
 def getRanking(regional):
     """For a given regional name, outputs a huge list of lists of the form:
-    [[[team number, median cycle number],...]
+    [[[team number, median cycle time],...]
     [[team number, median assists number],...]
     [[team number, median truss number],...]
     [[team number, median attempted shots on high goal*shooting success percentage],...]
     [[team number, median catches],...]]
+
+    It's sorted already
     """
-
-
+    try:
+        with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'rb') as _file:
+            teams = pickle.load(_file)
+    except:
+        return []
+    out = [[],[],[],[],[]]
+    for team in teams:
+        data=getTeam(team)
+        out[0]+=[[team,data['assist'][0][1]]]
+        out[1]+=[[team,data['assist'][0][0]]]
+        out[2]+=[[team,data['truss'][0]]]
+        out[3]+=[[team,data['shooting'][0][0]]]
+        out[4]+=[[team,data['assist'][1][0]]]
+    out[0].sort(key=lambda x: x[1], reverse=False)
+    out[1].sort(key=lambda x: x[1], reverse=True)
+    out[2].sort(key=lambda x: x[1], reverse=True)
+    out[3].sort(key=lambda x: x[1], reverse=True)
+    out[4].sort(key=lambda x: x[1], reverse=True)
+    return out
 
 """Extra helper functions"""
 def getGoals(data):
