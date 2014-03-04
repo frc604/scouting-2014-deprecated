@@ -5,8 +5,8 @@ Created on Feb 16, 2014
 '''
 
 
-from Tkinter import Tk, RIGHT, BOTH, RAISED, NONE
-from ttk import Frame, Button, Style
+from Tkinter import *
+from ttk import *
 import BackEnd.DataHandler
 
 class TeamRanking(Frame):
@@ -20,13 +20,19 @@ class TeamRanking(Frame):
         self.Style.theme_use("default")
         
         aggregated_ranking_list = BackEnd.DataHandler.getRanking("TEST")
-        cycle_ranking = aggregated_ranking_list[1]
-        assist_ranking = aggregated_ranking_list[2]
-        truss_ranking = aggregated_ranking_list[3]
-        shooting_ranking = aggregated_ranking_list[4]
-        catches_ranking = aggregated_ranking_list[5]
+        cycle_ranking_list = aggregated_ranking_list[1]
+        assist_ranking_list = aggregated_ranking_list[2]
+        truss_ranking_list = aggregated_ranking_list[3]
+        shooting_ranking_list = aggregated_ranking_list[4]
+        catches_ranking_list = aggregated_ranking_list[5]
         
+        team_cycle_ranking = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],] #TODO: Change the number of lists in this list per regional.
         
+        lb_cycle_ranking = Listbox(self.parent)
+        
+        for i in cycle_ranking_list:
+            team_cycle_ranking[i][1] = cycle_ranking_list[i][1]
+            lb_cycle_ranking.INSERT(END,team_cycle_ranking[i][1]) 
         
         
 def Team_Ranking():

@@ -127,7 +127,7 @@ def getTeam(team, regional):
 
     shooting_successes_h=[]
     shooting_attempts_h=[]
-    shooting_totals_h=[]
+    shooting_totals_h=[0,0]
     shooting_successes_l=[]
     shooting_attempts_l=[]
     shooting_totals_l=[]
@@ -197,13 +197,13 @@ def getRanking(regional):
     It's sorted already
     """
     try:
-        with open('../BackEnd/Data/Raw/'+str(reigonal)+'_team_index.604', 'rb') as _file:
+        with open('../BackEnd/Data/Raw/'+str(regional)+'_team_index.604', 'rb') as _file:
             teams = pickle.load(_file)
     except:
         return []
     out = [[],[],[],[],[]]
     for team in teams:
-        data=getTeam(team)
+        data=getTeam(team, regional)
         out[0]+=[[team,data['assist'][0][1]]]
         out[1]+=[[team,data['assist'][0][0]]]
         out[2]+=[[team,data['truss'][0]]]
