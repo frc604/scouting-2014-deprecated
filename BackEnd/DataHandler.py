@@ -184,7 +184,6 @@ def getTeam(team, regional):
     result['auton'][1]=findP(auton[0],auton[4],0,1,0,.000001)
     result['auton'][2]=findP(auton[0],auton[2],0,1,0,.000001)
     result['auton'][3]=findP(auton[0],auton[1],0,1,0,.000001)
-
     return result
     
 def getRanking(regional):
@@ -198,7 +197,7 @@ def getRanking(regional):
     It's sorted already
     """
     try:
-        with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'rb') as _file:
+        with open('../BackEnd/Data/Raw/'+str(reigonal)+'_team_index.604', 'rb') as _file:
             teams = pickle.load(_file)
     except:
         return []
