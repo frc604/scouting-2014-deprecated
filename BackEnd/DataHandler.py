@@ -123,7 +123,7 @@ def getTeam(team, regional):
     shooting_data = getGoals(match_data)
     assist_data = getAssists(match_data)
     truss_data = getTruss(match_data)
-    auton_data = getAuton(data)
+    auton_data = getAuton(match_data)
 
     shooting_successes_h=[]
     shooting_attempts_h=[]
@@ -193,7 +193,7 @@ def getRanking(regional):
     [[team number, median assists number],...]
     [[team number, median truss number],...]
     [[team number, median attempted shots on high goal*shooting success percentage],...]
-    [[team number, median catches],...]]
+    [[team number, median catches],...]]    
 
     It's sorted already
     """

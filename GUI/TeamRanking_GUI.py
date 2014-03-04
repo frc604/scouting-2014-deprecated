@@ -19,13 +19,19 @@ class TeamRanking(Frame):
         self.Style = Style( )
         self.Style.theme_use("default")
         
-        ranking = BackEnd.DataHandler.getRanking("TEST")
+        aggregated_ranking_list = BackEnd.DataHandler.getRanking("TEST")
+        cycle_ranking = aggregated_ranking_list[1]
+        assist_ranking = aggregated_ranking_list[2]
+        truss_ranking = aggregated_ranking_list[3]
+        shooting_ranking = aggregated_ranking_list[4]
+        catches_ranking = aggregated_ranking_list[5]
+        
         
         
         
 def Team_Ranking():
     root_team_ranking = Tk()
-    root_team_ranking.geometry = ("900x900 +300+300")
+    root_team_ranking.geometry = ("900x900+300+300")
     app = TeamRanking(root_team_ranking)
     root_team_ranking.wait_visibility()
     root_team_ranking.mainloop()
