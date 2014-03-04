@@ -37,8 +37,8 @@ def _input(_in):
         assists: int- number of assists
         shots: list-
             [high, low]
-            high: list- [shots attempted, shots fired]
-            low: list- [shots attempted, shots fired]
+            high: list- [shots attempted, successes]
+            low: list- [shots attempted, successes]
         truss: list- [attempts, successes]
         catch: list- [attempts, successes]
         fouls: list-
@@ -94,24 +94,50 @@ def getMatchHistory(team, regional):
 def getTeam(team, regional):
     """Takes in a team number and regional name and spits out a dictionary with the keys:
     shooting: list of floats-
-        [[median attempted shots on high goal*shooting success percentage, standard deviation],
-        [median attempted shots on high goal*shooting success percentage, standard deviation],
+        [[median attempted shots on high goal*shooting success percentage, standard deviation for succesful shots],
+        [median attempted shots on low goal*shooting success percentage, standard deviation for succesful shots],
         [shooting success percentage for high goal, shooting success percentage for low goal]]
     assist: list of floats-
         [[median assists, median cycle time],
-        [meduan attempted catches*catch success percentage, catch percentage]]
+        [meduan attempted catches*catch success percentage, catch percentage, standard deviation for succesful catches]]
     truss: list of floats-
         [median attempted truss shots*success percentage, standard deviation, success percentage]
     auton: list of floats-
         [success percentage, ratio of hot goal shots to not hot goal shots, ratio of high goal shots to low goal shots]
-    power: float- power rating thing
 
 
     Additional note - all percentages are decimals (less than 1)
     """
     match_data=getMatchHistory(team, regional)
     result={}
-    
+    result['shooting']=[[],[],[[],[]]]
+    shooting_data = getGoals(match_data)
+    assist_data = getAssists(match_data)
+    truss_data = getTruss(match_data)
+    auton_data = getAuton(data)
+
+    shooting_successes_h=[]
+    shooting_attempts_h=[]
+    shooting_totals_h=[]
+    shooting_successes_l=[]
+    shooting_attempts_l=[]
+    shooting_totals_l=[]
+    for element in shooting_data[0]:
+        shooting_attempts_h+=[element[0]]
+        shooting_totals_h[0]+=element[0]
+        shooting_successes_h+=[element[1]]
+        shooting_totals_h[1]+=element[1]
+    for element in shooting_data[1]:
+        shooting_attempts_l+=[element[0]]
+        shooting_totals_l[0]+=element[0]
+        shooting_successes_l+=[element[1]]
+        shooting_totals_l[1]+=element[1]
+    result['shooting'][2][0]=findP(shooting_totals_h[0],shooting_totals_h[1],0,1,0,.000001)
+    result['shooting'][2][1]=findP(shooting_totals_l[0],shooting_totals_l[1],0,1,0,.000001)
+    result['shooting'][0][0]=median(shooting_attempts_h)*result['shooting'][2][0]
+    result['shooting'][1][0]=median(shooting_attempts_l)*result['shooting'][2][1]
+    result['shooting'][0][1]=std(shooting_successes_h)
+    result['shooting'][1][1]=std(shooting_successes_l)
     
 def getRanking(regional):
     """For a given regional name, outputs a huge list of lists of the form:
@@ -143,12 +169,17 @@ def getAssists(data):
         out[3][1]+=[element['teleop']['catch'][1]]
     return out
 
-def getTruss(data, position):
+def getTruss(data):
     out=[[],[]]
     for element in data:
         out[0]+=[element['teleop']['truss'][0]]
         out[1]+=[element['teleop']['truss'][1]]
     return out
+
+def getAuton(data):
+    out=[]
+    for element in data:
+        out+=[element['auton']]
     
 #def calcPower(data):
 
