@@ -97,13 +97,14 @@ def getTeam(team, regional):
         [[median attempted shots on high goal*shooting success percentage, standard deviation for succesful shots],
         [median attempted shots on low goal*shooting success percentage, standard deviation for succesful shots],
         [shooting success percentage for high goal, shooting success percentage for low goal]]
-    assist: list of floats-
+    assist: list of floats and ints-
         [[median assists, median cycle time],
         [meduan attempted catches*catch success percentage, catch percentage, standard deviation for succesful catches]]
     truss: list of floats-
         [median attempted truss shots*success percentage, standard deviation, success percentage]
     auton: list of floats-
-        [success percentage, ratio of hot goal shots to not hot goal shots, ratio of high goal shots to low goal shots]
+        [success percentage for shooting, ratio of hot goal shots to not hot goal shots, ratio of high goal shots to low goal shots,
+        success percentage for driving]
 
 
     Additional note - all percentages are decimals (less than 1)
@@ -138,6 +139,45 @@ def getTeam(team, regional):
     result['shooting'][1][0]=median(shooting_attempts_l)*result['shooting'][2][1]
     result['shooting'][0][1]=std(shooting_successes_h)
     result['shooting'][1][1]=std(shooting_successes_l)
+
+    assisting=getAssists(match_data)
+    assists=assisting[0]
+    cycles=assisting[1]
+    cycle_time=[]
+    catch_attempts=assisting[2][0]
+    catch_successes=assisting[2][1]
+    catch_attempt_sum=0
+    catch_success_sum=0
+    for element in assisting[2][0]:
+        catch_attempt_sum+=element
+    for element in assisting[2][1]:
+        catch_success_sum+=element
+    for element in cycles:
+        cycle_time+=[140/element]
+    result['assist'][0][0]=median(assists)
+    result['assist'][0][1]=median(cycle_time)
+    result['assist'][1][1]=findP(catch_attempt_sum,catch_success_sum,0,1,0,.000001)
+    result['assist'][1][0]=median(catch_attempts)*result['assist'][1][1]
+    result['assist'][1][2]=std(catch_successes)
+
+    truss=getTruss(match_data)
+    truss_attempts=0
+    truss_success=0
+    for element in truss[0]:
+        truss_attempts+=element
+    for element in truss[1]:
+        truss_success+=element
+    result['truss'][2]=findP(truss_attempts,truss_success,0,1,0,.000001)
+    result['truss'][0]=median(truss_attempts)*result['truss'][2]
+    result['truss'][1]=std(truss_success)
+
+    auton=getAuton(match_data)
+    result['auton'][0]=findP(auton[0],auton[3],0,1,0,.000001)
+    result['auton'][1]=findP(auton[0],auton[4],0,1,0,.000001)
+    result['auton'][2]=findP(auton[0],auton[2],0,1,0,.000001)
+    result['auton'][3]=findP(auton[0],auton[1],0,1,0,.000001)
+
+    return result
     
 def getRanking(regional):
     """For a given regional name, outputs a huge list of lists of the form:
@@ -165,8 +205,8 @@ def getAssists(data):
     for element in data:
         out[0]+=[element['teleop']['assists']]
         out[1]+=[element['teleop']['cycles']]
-        out[3][1]+=[element['teleop']['catch'][0]]
-        out[3][1]+=[element['teleop']['catch'][1]]
+        out[2][1]+=[element['teleop']['catch'][0]]
+        out[2][1]+=[element['teleop']['catch'][1]]
     return out
 
 def getTruss(data):
@@ -177,9 +217,19 @@ def getTruss(data):
     return out
 
 def getAuton(data):
-    out=[]
+    """[matches, driving successes, high, success, hot]"""
+    out=[0,0,0,0,0]
     for element in data:
-        out+=[element['auton']]
+        out[0]+=1
+        if element['auton'][0]:
+            out[1]+=1
+        if element['auton'][1][0]:
+            out[2]+=1
+        if element['auton'][1][1]:
+            out[3]+=1
+        if element['auton'][1][2]:
+            out[4]+=1
+        
     
 #def calcPower(data):
 
