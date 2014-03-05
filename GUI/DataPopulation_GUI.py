@@ -6,7 +6,6 @@ Created on Feb 17, 2014
 from Tkinter import *
 from ttk import *
 import BackEnd.DataHandler
-from UsefulFunctions import combine_funcs
 
 class DataPopulation(Frame):
     def __init__(self,
@@ -219,7 +218,7 @@ class DataPopulation(Frame):
         CommentsEntry = Entry(self.parent)
         CommentsEntry.grid(row=27, column=1, columnspan=3, rowspan=1)
         
-        self.SubmitButtonArgs = (
+        self.SubmitButtonArgs = [
             TeamNumberEntry, 
             MatchNumberEntry, 
             AllianceEntry, 
@@ -242,8 +241,9 @@ class DataPopulation(Frame):
             TechFoulNumberEntry,
             AllianceFoulNumberEntry,
             CardNumberEntry,
-            CommentsEntry
-        )
+            CommentsEntry]
+        
+        
         SubmitButton = Button(self.parent, text="Submit", command=self.EntrySubmission)
         SubmitButton.grid(row=26, column=5)
         
