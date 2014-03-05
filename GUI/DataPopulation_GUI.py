@@ -219,59 +219,62 @@ class DataPopulation(Frame):
         CommentsEntry = Entry(self.parent)
         CommentsEntry.grid(row=27, column=1, columnspan=3, rowspan=1)
         
-        SubmitButton = Button(self.parent, text="Submit", command=self.EntrySubmission(TeamNumberEntry, 
-                                                                                       MatchNumberEntry, 
-                                                                                       AllianceEntry, 
-                                                                                       BlueAllianceScoreEntry, 
-                                                                                       RedAllianceScoreEntry, 
-                                                                                       AutonDrivingEntry,
-                                                                                       AutonShootingPosEntry,
-                                                                                       AutonShootingSFEntry,
-                                                                                       AutonShootingHNEntry,
-                                                                                       TeleopAssistNumberEntry,
-                                                                                       TeleopHShotsAttemptedEntry,
-                                                                                       TeleopHShotsMadeEntry,
-                                                                                       TeleopLShotsAttemptedEntry,
-                                                                                       TeleopLShotsMadeEntry,
-                                                                                       TeleopTrussAttemptedEntry,
-                                                                                       TeleopTrussMadeEntry,
-                                                                                       TeleopCatchesAttemptedEntry,
-                                                                                       TeleopCatchesMadeEntry,
-                                                                                       FoulNumberEntry,
-                                                                                       TechFoulNumberEntry,
-                                                                                       AllianceFoulNumberEntry,
-                                                                                       CardNumberEntry,
-                                                                                       CommentsEntry))
+        self.SubmitButtonArgs = (
+            TeamNumberEntry, 
+            MatchNumberEntry, 
+            AllianceEntry, 
+            BlueAllianceScoreEntry, 
+            RedAllianceScoreEntry, 
+            AutonDrivingEntry,
+            AutonShootingPosEntry,
+            AutonShootingSFEntry,
+            AutonShootingHNEntry,
+            TeleopAssistNumberEntry,
+            TeleopHShotsAttemptedEntry,
+            TeleopHShotsMadeEntry,
+            TeleopLShotsAttemptedEntry,
+            TeleopLShotsMadeEntry,
+            TeleopTrussAttemptedEntry,
+            TeleopTrussMadeEntry,
+            TeleopCatchesAttemptedEntry,
+            TeleopCatchesMadeEntry,
+            FoulNumberEntry,
+            TechFoulNumberEntry,
+            AllianceFoulNumberEntry,
+            CardNumberEntry,
+            CommentsEntry
+        )
+        SubmitButton = Button(self.parent, text="Submit", command=self.EntrySubmission)
         SubmitButton.grid(row=26, column=5)
         
         CloseButton = Button(self.parent,text="Close", command=self.parent.quit)
         CloseButton.grid(row=28, column=5)
         
-    
-    def EntrySubmission(self, 
-                        TeamNumberEntry, 
-                        MatchNumberEntry, 
-                        AllianceEntry, 
-                        BlueAllianceScoreEntry, 
-                        RedAllianceScoreEntry, 
-                        AutonDrivingEntry,
-                        AutonShootingPosEntry,
-                        AutonShootingSFEntry,
-                        AutonShootingHNEntry,
-                        TeleopAssistNumberEntry,
-                        TeleopHShotsAttemptedEntry,
-                        TeleopHShotsMadeEntry,
-                        TeleopLShotsAttemptedEntry,
-                        TeleopLShotsMadeEntry,
-                        TeleopTrussAttemptedEntry,
-                        TeleopTrussMadeEntry,
-                        TeleopCatchesAttemptedEntry,
-                        TeleopCatchesMadeEntry,
-                        FoulNumberEntry,
-                        TechFoulNumberEntry,
-                        AllianceFoulNumberEntry,
-                        CardNumberEntry,
-                        CommentsEntry):
+    def EntrySubmission(self):
+        # TODO: Make this suck less
+        TeamNumberEntry = self.SubmitButtonArgs[0]
+        MatchNumberEntry = self.SubmitButtonArgs[1]
+        AllianceEntry = self.SubmitButtonArgs[2]
+        BlueAllianceScoreEntry = self.SubmitButtonArgs[3]
+        RedAllianceScoreEntry = self.SubmitButtonArgs[4]
+        AutonDrivingEntry = self.SubmitButtonArgs[5]
+        AutonShootingPosEntry = self.SubmitButtonArgs[6]
+        AutonShootingSFEntry = self.SubmitButtonArgs[7]
+        AutonShootingHNEntry = self.SubmitButtonArgs[8]
+        TeleopAssistNumberEntry = self.SubmitButtonArgs[9]
+        TeleopHShotsAttemptedEntry = self.SubmitButtonArgs[10]
+        TeleopHShotsMadeEntry = self.SubmitButtonArgs[11]
+        TeleopLShotsAttemptedEntry = self.SubmitButtonArgs[12]
+        TeleopLShotsMadeEntry = self.SubmitButtonArgs[13]
+        TeleopTrussAttemptedEntry = self.SubmitButtonArgs[14]
+        TeleopTrussMadeEntry = self.SubmitButtonArgs[15]
+        TeleopCatchesAttemptedEntry = self.SubmitButtonArgs[16]
+        TeleopCatchesMadeEntry = self.SubmitButtonArgs[17]
+        FoulNumberEntry = self.SubmitButtonArgs[18]
+        TechFoulNumberEntry = self.SubmitButtonArgs[19]
+        AllianceFoulNumberEntry = self.SubmitButtonArgs[20]
+        CardNumberEntry = self.SubmitButtonArgs[21]
+        CommentsEntry = self.SubmitButtonArgs[22]
         
         TeamNumber = int(TeamNumberEntry.get())
         MatchNumber = int(MatchNumberEntry.get())
