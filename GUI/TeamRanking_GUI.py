@@ -33,7 +33,7 @@ class TeamRanking(Frame):
         for enum, i in enumerate(cycle_ranking_list):
             print i
             team_cycle_ranking.append(cycle_ranking_list[enum][1])
-            lb_cycle_ranking.insert(END,team_cycle_ranking[i]) 
+            lb_cycle_ranking.insert(END,team_cycle_ranking[enum])
         lb_cycle_ranking.pack(side=LEFT, 
                               padx=15, 
                               pady=5)
@@ -41,9 +41,9 @@ class TeamRanking(Frame):
         team_assist_ranking = []
         lb_assist_ranking = Listbox(self.parent)
         
-        for j in assist_ranking_list:
-            team_assist_ranking[j] = assist_ranking_list[j][1]
-            lb_assist_ranking.insert(END,team_assist_ranking[j])
+        for enum, j in enumerate(assist_ranking_list):
+            team_assist_ranking.append(assist_ranking_list[enum][1])
+            lb_assist_ranking.insert(END,team_assist_ranking[enum])
         lb_assist_ranking.pack(side=LEFT,
                                padx=15,
                                pady=5)
@@ -51,9 +51,9 @@ class TeamRanking(Frame):
         team_truss_ranking = []
         lb_truss_ranking = Listbox(self.parent)
         
-        for k in truss_ranking_list:
-            team_truss_ranking[k] = truss_ranking_list[k][1]
-            lb_truss_ranking.insert(END,team_truss_ranking[k])
+        for enum, k in enumerate(truss_ranking_list):
+            team_truss_ranking.append(truss_ranking_list[enum][1])
+            lb_truss_ranking.insert(END,team_truss_ranking[enum])
         lb_truss_ranking.pack(side=LEFT,
                               padx=15,
                               pady=5)
@@ -61,9 +61,9 @@ class TeamRanking(Frame):
         team_shooting_ranking = []
         lb_shooting_ranking = Listbox(self.parent)
         
-        for l in shooting_ranking_list:
-            team_shooting_ranking[l] = shooting_ranking_list[l][1]
-            lb_shooting_ranking.insert(END,team_shooting_ranking[l])
+        for enum, l in enumerate(shooting_ranking_list):
+            team_shooting_ranking.append(shooting_ranking_list[enum][1])
+            lb_shooting_ranking.insert(END,team_shooting_ranking[enum])
         lb_shooting_ranking.pack(side=LEFT,
                                  padx=15,
                                  pady=5)
@@ -71,9 +71,9 @@ class TeamRanking(Frame):
         team_catches_ranking = []
         lb_catches_ranking = Listbox(self.parent)
         
-        for m in catches_ranking_list:
-            team_catches_ranking[m] = catches_ranking_list[m][1]
-            lb_catches_ranking.insert(END,team_catches_ranking[m])
+        for enum, m in enumerate(catches_ranking_list):
+            team_catches_ranking.append(catches_ranking_list[enum][1])
+            lb_catches_ranking.insert(END,team_catches_ranking[enum])
         lb_catches_ranking.pack(side=LEFT,
                                  padx=15,
                                  pady=5)
