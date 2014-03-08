@@ -319,6 +319,7 @@ class DataPopulation(Frame):
                                       'fouls':[FoulNumber,TechFoulNumber,AllianceFoulNumber,CardNumber],
                                       'cycles':Cycles,
                                       'comments':Comments}}
+        print TeleopLShotsAttempted, TeleopLShotsMade
         
         BackEnd.DataHandler._input(BigAssDictionary)
         

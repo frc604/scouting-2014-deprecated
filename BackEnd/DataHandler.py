@@ -119,7 +119,7 @@ def getTeam(team, regional):
     """
     match_data=getMatchHistory(team, regional)
     result={}
-    result['shooting']=[[],[],[[],[]]]
+    result['shooting']=[[0,0],[0,0],[[0,0],[0,0]]]
     shooting_data = getGoals(match_data)
     assist_data = getAssists(match_data)
     truss_data = getTruss(match_data)
@@ -130,7 +130,8 @@ def getTeam(team, regional):
     shooting_totals_h=[0,0]
     shooting_successes_l=[]
     shooting_attempts_l=[]
-    shooting_totals_l=[]
+    shooting_totals_l=[0,0]
+
     for element in shooting_data[0]:
         shooting_attempts_h+=[element[0]]
         shooting_totals_h[0]+=element[0]
@@ -162,11 +163,12 @@ def getTeam(team, regional):
         catch_success_sum+=element
     for element in cycles:
         cycle_time+=[140/element]
-    result['assist'][0][0]=median(assists)
-    result['assist'][0][1]=median(cycle_time)
-    result['assist'][1][1]=findP(catch_attempt_sum,catch_success_sum,0,1,0,.000001)
-    result['assist'][1][0]=median(catch_attempts)*result['assist'][1][1]
-    result['assist'][1][2]=std(catch_successes)
+    result['assists'] = [[0,0],[0,0,0]]
+    result['assists'][0][0]=median(assists)
+    result['assists'][0][1]=median(cycle_time)
+    result['assists'][1][1]=findP(catch_attempt_sum,catch_success_sum,0,1,0,.000001)
+    result['assists'][1][0]=median(catch_attempts)*result['assists'][1][1]
+    result['assists'][1][2]=std(catch_successes)
 
     truss=getTruss(match_data)
     truss_attempts=0
@@ -175,11 +177,15 @@ def getTeam(team, regional):
         truss_attempts+=element
     for element in truss[1]:
         truss_success+=element
+    result['truss'] = [0,0,0]
     result['truss'][2]=findP(truss_attempts,truss_success,0,1,0,.000001)
     result['truss'][0]=median(truss_attempts)*result['truss'][2]
     result['truss'][1]=std(truss_success)
 
     auton=getAuton(match_data)
+    if not auton: # fixme hack
+        auton = [0,0,0,0,0]
+    result['auton'] = [0,0,0,0]
     result['auton'][0]=findP(auton[0],auton[3],0,1,0,.000001)
     result['auton'][1]=findP(auton[0],auton[4],0,1,0,.000001)
     result['auton'][2]=findP(auton[0],auton[2],0,1,0,.000001)
@@ -204,11 +210,11 @@ def getRanking(regional):
     out = [[],[],[],[],[]]
     for team in teams:
         data=getTeam(team, regional)
-        out[0]+=[[team,data['assist'][0][1]]]
-        out[1]+=[[team,data['assist'][0][0]]]
+        out[0]+=[[team,data['assists'][0][1]]]
+        out[1]+=[[team,data['assists'][0][0]]]
         out[2]+=[[team,data['truss'][0]]]
         out[3]+=[[team,data['shooting'][0][0]]]
-        out[4]+=[[team,data['assist'][1][0]]]
+        out[4]+=[[team,data['assists'][1][0]]]
     out[0].sort(key=lambda x: x[1], reverse=False)
     out[1].sort(key=lambda x: x[1], reverse=True)
     out[2].sort(key=lambda x: x[1], reverse=True)
@@ -274,7 +280,12 @@ def findP(n, q, nCq, upper, lower, tolerance):
     """binary seraches for p using the following formula:
     (nCq) * integral from p to 0 of (t^q)(1-t)^(n-q) dt = 1/2 """
     if (nCq==0):
+        print n
+        print q
         nCq=float(comb(n, q, exact=True))
+        print nCq
+    if nCq == 0:
+        return 0
     test=(upper+lower)/2.0
     val=quad(integrand, 0, test, args=(n,q))
     if ((val[0]-1/(2*nCq))<tolerance):

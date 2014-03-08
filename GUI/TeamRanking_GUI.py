@@ -20,18 +20,20 @@ class TeamRanking(Frame):
         self.Style.theme_use("default")
         
         aggregated_ranking_list = BackEnd.DataHandler.getRanking("TEST")
-        cycle_ranking_list = aggregated_ranking_list[1]
-        assist_ranking_list = aggregated_ranking_list[2]
-        truss_ranking_list = aggregated_ranking_list[3]
-        shooting_ranking_list = aggregated_ranking_list[4]
-        catches_ranking_list = aggregated_ranking_list[5]
+        cycle_ranking_list = aggregated_ranking_list[0]
+        assist_ranking_list = aggregated_ranking_list[1]
+        truss_ranking_list = aggregated_ranking_list[2]
+        shooting_ranking_list = aggregated_ranking_list[3]
+#        print aggregated_ranking_list
+        catches_ranking_list = aggregated_ranking_list[4]
         
         team_cycle_ranking = []
         lb_cycle_ranking = Listbox(self.parent)
         
-        for i in cycle_ranking_list:
-            team_cycle_ranking[i] = cycle_ranking_list[i][1]
-            lb_cycle_ranking.INSERT(END,team_cycle_ranking[i]) 
+        for enum, i in enumerate(cycle_ranking_list):
+            print i
+            team_cycle_ranking.append(cycle_ranking_list[enum][1])
+            lb_cycle_ranking.insert(END,team_cycle_ranking[i]) 
         lb_cycle_ranking.pack(side=LEFT, 
                               padx=15, 
                               pady=5)
@@ -41,7 +43,7 @@ class TeamRanking(Frame):
         
         for j in assist_ranking_list:
             team_assist_ranking[j] = assist_ranking_list[j][1]
-            lb_assist_ranking.INSERT(END,team_assist_ranking[j])
+            lb_assist_ranking.insert(END,team_assist_ranking[j])
         lb_assist_ranking.pack(side=LEFT,
                                padx=15,
                                pady=5)
@@ -51,7 +53,7 @@ class TeamRanking(Frame):
         
         for k in truss_ranking_list:
             team_truss_ranking[k] = truss_ranking_list[k][1]
-            lb_truss_ranking.INSERT(END,team_truss_ranking[k])
+            lb_truss_ranking.insert(END,team_truss_ranking[k])
         lb_truss_ranking.pack(side=LEFT,
                               padx=15,
                               pady=5)
@@ -61,7 +63,7 @@ class TeamRanking(Frame):
         
         for l in shooting_ranking_list:
             team_shooting_ranking[l] = shooting_ranking_list[l][1]
-            lb_shooting_ranking.INSERT(END,team_shooting_ranking[l])
+            lb_shooting_ranking.insert(END,team_shooting_ranking[l])
         lb_shooting_ranking.pack(side=LEFT,
                                  padx=15,
                                  pady=5)
@@ -71,7 +73,7 @@ class TeamRanking(Frame):
         
         for m in catches_ranking_list:
             team_catches_ranking[m] = catches_ranking_list[m][1]
-            lb_catches_ranking.INSERT(END,team_catches_ranking[m])
+            lb_catches_ranking.insert(END,team_catches_ranking[m])
         lb_catches_ranking.pack(side=LEFT,
                                  padx=15,
                                  pady=5)
