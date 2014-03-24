@@ -70,7 +70,7 @@ def _input(_in):
     except IOError:
         matches_played = []
     with open('../BackEnd/Data/Raw/'+_in['regional']+'_'+str(_in['team'])+'__index.604', 'wb') as _file:
-        pickle.dump(matches_played+[_in['match']], _file)
+        pickle.dump(list(set(matches_played+[_in['match']])), _file)
         
 def delete(team, match, regional):
     """Deletes data for a team, match, and regional if you screwed up. Returns 1 if it works and 0 if it didn't (no file found)."""
@@ -299,7 +299,29 @@ def integrand(x, n, q):
     return (x**q)*(1-x)**(n-q)
 
 
-
-
-
+def importData(path, regional):
+    """Takes a path and a regional name and imports the data at that path"""
+    try:
+        with open(path+str(regional)+'_team_index.604', 'rb') as _file:
+            teams_import = pickle.load(_file)
+    except:
+        return
     
+    try:
+        with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'rb') as _file:
+            teams_in_reigonal = pickle.load(_file)
+    except IOError:
+        teams_in_reigonal = []
+
+    for team in teams_import:
+        teams_in_reigonal=list(set(teams_in_reigonal+[team]))
+        try:
+            with open(path+regional+'_'+str(team)+'__index.604', 'rb') as _file:
+                matches_import = pickle.load(_file)
+        except IOError:
+            matches_import = []
+        for match in matches_import:
+            with open(path+regional+'_'+str(team)+'_'+str(match)+'.604', 'rb') as _file:
+                _input(pickle.load(_file))
+    with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'wb') as _file:
+        pickle.dump(teams_in_reigonal,_file)
