@@ -7,7 +7,6 @@ from Tkinter import Tk, RIGHT, BOTH, RAISED, NONE
 from ttk import Frame, Button, Style
 from DataPopulation_GUI import Data_Population
 from TeamRanking_GUI import Team_Ranking
-from TeamLookup_GUI import Team_Lookup
 
 class ScoutingWrapper(Frame):
     def __init__(self, parent):
@@ -20,7 +19,7 @@ class ScoutingWrapper(Frame):
         
     def initUI(self):
         
-        self.parent.title("Team 604 Scouting App - ver. 0.1")
+        self.parent.title("Team 604 Scouting App - ver. 0.2")
         
         self.style = Style()
         self.style.theme_use("default")
@@ -42,8 +41,7 @@ class ScoutingWrapper(Frame):
         dataPopulationButton.pack()
         
         teamLookupButton = Button(self,
-                                  text="Team Lookup",
-                                  command=Team_Lookup, 
+                                  text="Export",    # Export module needs to be made 
                                   width=12)           
         teamLookupButton.pack()
         
