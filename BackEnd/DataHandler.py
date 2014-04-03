@@ -48,6 +48,7 @@ def _input(_in):
             alliance: int- alliance fouls
             cards: int- yellow cards
         cycles: int- number of cycles
+        strategy: string- defense, shooting, not doing jack, etc.
         comments: string- additional comments"""
     try:
         os.makedirs('../BackEnd/Data/Raw/')
@@ -325,3 +326,75 @@ def importData(path, regional):
                 _input(pickle.load(_file))
     with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'wb') as _file:
         pickle.dump(teams_in_reigonal,_file)
+
+def export(path, regional):
+    """Takes a path (with slash at end) and exports to that path. Filename will be scouting.csv """
+    out = xlwt.Workbook()
+    try:
+        with open('../BackEnd/Data/Raw/'+str(regional)+'_team_index.604', 'rb') as _file:
+            teams = pickle.load(_file)'
+    except:
+        return
+    for team in teams:
+        sheet=out.add_sheet(str(team))
+        sheet.write(0,0,'Team number')
+        sheet.write(0,1,str(team))
+        sheet.write(1,4,'Auton')
+        sheet.write(1,8,'Teleop')
+        sheet.write(1,18,'Penalties')
+        sheet.write(2,0,'Match #')
+        sheet.write(2,1,'Alliance')
+        sheet.write(2,2,'Blue Score')
+        sheet.write(2,3,'Red Score')
+        sheet.write(2,4,'Drove')
+        sheet.write(2,5,'High Goal Success?')
+        sheet.write(2,6,'Low Goal Success?')
+        sheet.write(2,7,'Hot goal?')
+        sheet.write(2,8,'Strategy')
+        sheet.write(2,9,'High Attempts')
+        sheet.write(2,10,'High Succeses')
+        sheet.write(2,11,'Low Attempts')
+        sheet.write(2,12,'Low Succeses')
+        sheet.write(2,13,'Cycles')
+        sheet.write(2,14,'Truss Attempts')
+        sheet.write(2,15,'Truss Succeses')
+        sheet.write(2,16,'Catch Attempts')
+        sheet.write(2,17,'Catch Successes')
+        sheet.write(2,18,'Assist Number')
+        sheet.write(2,19,'Foul')
+        sheet.write(2,20,'Tech')
+        sheet.write(2,21,'Card')
+        sheet.write(2,22,'Alliance')
+        sheet.write(2,23,'Comments')
+        history=getMatchHistory(team, regional)
+        index=3
+        for match in history:
+            sheet.write(index,0,match['match'])
+            if match['alliance']:
+                sheet.write(index,1,'Blue')
+            else:
+                sheet.write(index,1,'Red')
+            sheet.write(index,2,match['score'][0])
+            sheet.write(index,3,match['score'][1])
+            sheet.write(index,4,match['auton'][0])
+            sheet.write(index,5,match['auton'][1][0]&match['auton'][1][1])
+            sheet.write(index,6,(not match['auton'][1][0])&match['auton'][1][1])
+            sheet.write(index,7,match['auton'][1][3])
+            sheet.write(index,8,match['teleop']['strategy'])
+            sheet.write(index,9,match['teleop']['shots'][0][0])
+            sheet.write(index,10,match['teleop']['shots'][0][1])
+            sheet.write(index,11,match['teleop']['shots'][1][1])
+            sheet.write(index,12,match['teleop']['shots'][1][1])
+            sheet.write(index,13,match['teleop']['cycles'])
+            sheet.write(index,14,match['teleop']['truss'][0])
+            sheet.write(index,15,match['teleop']['truss'][1])
+            sheet.write(index,16,match['teleop']['catch'][0])
+            sheet.write(index,17,match['teleop']['catch'][1])
+            sheet.write(index,18,match['teleop']['assists'])
+            sheet.write(index,19,match['teleop']['fouls'][0])
+            sheet.write(index,20,match['teleop']['fouls'][1])
+            sheet.write(index,21,match['teleop']['fouls'][2])
+            sheet.write(index,22,match['teleop']['fouls'][3])
+            sheet.write(index,23,match['teleop']['comments'])
+            index+=1
+    out.save(path+'scouting.xls')
