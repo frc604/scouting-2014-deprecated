@@ -19,7 +19,7 @@ class TeamRanking(Frame):
         self.Style = Style( )
         self.Style.theme_use("default")
         
-        aggregated_ranking_list = BackEnd.DataHandler.getRanking("TEST")
+        aggregated_ranking_list = BackEnd.DataHandler.getRanking("CASJ")
         cycle_ranking_list = aggregated_ranking_list[0]
         assist_ranking_list = aggregated_ranking_list[1]
         truss_ranking_list = aggregated_ranking_list[2]

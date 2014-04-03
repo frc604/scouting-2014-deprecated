@@ -303,7 +303,7 @@ class DataPopulation(Frame):
 
         BigAssDictionary = {'team':TeamNumber, 
                             'match':MatchNumber,
-                            'regional':'CASD',     #TODO: Change the Regional Value
+                            'regional':'CASJ',     #TODO: Change the Regional Value
                             'alliance':Alliance,
                             'score':[BlueAllianceScore,
                                      RedAllianceScore],
