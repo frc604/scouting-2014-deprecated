@@ -7,6 +7,7 @@ from Tkinter import Tk, RIGHT, BOTH, RAISED, NONE
 from ttk import Frame, Button, Style
 from DataPopulation_GUI import Data_Population
 from TeamRanking_GUI import Team_Ranking
+import tkMessageBox
 
 class ScoutingWrapper(Frame):
     def __init__(self, parent):
@@ -35,7 +36,7 @@ class ScoutingWrapper(Frame):
         #Key Functions
         
         dataPopulationButton = Button(self, 
-                                      text="Data Population",
+                                      te1xt="Data Population",
                                       command=Data_Population, 
                                       width=12)   
         dataPopulationButton.pack()
@@ -73,6 +74,8 @@ class ScoutingWrapper(Frame):
 
         self.pack(fill=BOTH, 
                   expand=1)
+    def Export_Message_Confirmation():
+        
         
 def main():
 

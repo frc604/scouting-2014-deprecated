@@ -328,7 +328,7 @@ def importData(path, regional):
         pickle.dump(teams_in_reigonal,_file)
 
 def export(path, regional):
-    """Takes a path (with slash at end) and exports to that path. Filename will be scouting.csv """
+    """Takes a path (with slash at end) and exports to that path. Filename will be scouting.xls """
     out = xlwt.Workbook()
     try:
         with open('../BackEnd/Data/Raw/'+str(regional)+'_team_index.604', 'rb') as _file:
