@@ -74,7 +74,7 @@ class ScoutingWrapper(Frame):
 
         self.pack(fill=BOTH, 
                   expand=1)
-    def Export_Message_Confirmation():
+    def Export_Message_Confirmation(self):
         
         
 def main():
