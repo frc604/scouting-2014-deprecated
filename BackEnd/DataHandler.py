@@ -417,7 +417,7 @@ def importXls(path, reigonal):
             except:
                 break
             match['regional']=reigonal
-            match['alliance']=(str(row[1].value).lower()==blue)
+            match['alliance']=(str(row[1].value).lower()=='blue'
             match['score']=[int(row[2].value),int(row[3].value)]
             match['auton']=[bool_decode(row[4]),[bool_decode(row[5]),bool_decode(row[6]),bool_decode(row[7])]]
             match['teleop']={}
