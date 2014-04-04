@@ -17,6 +17,8 @@ from scipy.misc import comb
 from scipy.integrate import quad
 from numpy import median
 from numpy import std
+import xlrd
+import xlwt
 
 def _input(_in):
     """Takes a dictionary _in with the keys:
@@ -328,7 +330,7 @@ def importData(path, regional):
         pickle.dump(teams_in_reigonal,_file)
 
 def export(path, regional):
-    """Takes a path (with slash at end) and exports to that path. Filename will be scouting.xls """
+    """Takes a path (with slash at end) and exports to that path. Filename will be scouting.xls"""
     out = xlwt.Workbook()
     try:
         with open('../BackEnd/Data/Raw/'+str(regional)+'_team_index.604', 'rb') as _file:
@@ -377,8 +379,8 @@ def export(path, regional):
             sheet.write(index,2,match['score'][0])
             sheet.write(index,3,match['score'][1])
             sheet.write(index,4,match['auton'][0])
-            sheet.write(index,5,match['auton'][1][0]&match['auton'][1][1])
-            sheet.write(index,6,(not match['auton'][1][0])&match['auton'][1][1])
+            sheet.write(index,5,match['auton'][1][0])
+            sheet.write(index,6,match['auton'][1][1])
             sheet.write(index,7,match['auton'][1][3])
             sheet.write(index,8,match['teleop']['strategy'])
             sheet.write(index,9,match['teleop']['shots'][0][0])
@@ -398,3 +400,58 @@ def export(path, regional):
             sheet.write(index,23,match['teleop']['comments'])
             index+=1
     out.save(path+'scouting.xls')
+def importXls(path, reigonal):
+    """Takes a path to an excel file (.xls) and and a reigonal and imports the data (adds it to preexisting database)"""
+    book=xlrd.open_workbook(path)
+    for sh in range(book.nsheets):
+        sheet=book.sheet_by_index(sh)
+        team=int(sheet.cell_value(rowx=0, colx=1))
+        for rw in range(3,sheet.nrows):
+            row=sheet.row(rw)
+            match={}
+            match['team']=team
+            try:
+                match['match']=int(row[0].value)
+            except:
+                break
+            match['regional']=reigonal
+            match['alliance']=(str(row[1].value).lower()==blue)
+            match['score']=[int(row[2].value),int(row[3].value)]
+            match['auton']=[bool_decode(row[4]),[bool_decode(row[5]),bool_decode(row[6]),bool_decode(row[7])]]
+            match['teleop']={}
+            match['teleop']['assists']=int(row[18].value)
+            match['teleop']['shots']=[[int(row[9].value),int(row[10].value)],[int(row[11].value),int(row[12].value)]]
+            match['teleop']['truss']=[int(row[14].value),int(row[15].value)]
+            match['teleop']['catch']=[int(row[16].value),int(row[17].value)]
+            match['teleop']['fouls']=[int(row[19].value),int(row[20].value),int(row[21].value),int(row[22].value)]
+            match['teleop']['cycles']=int(row[13].value)
+            match['teleop']['strategy']=str(row[8])
+            try:
+                match['teleop']['comments']=str(row[23].value)
+            except:
+                match['teleop']['comments']=''
+            _input(match)
+def bool_decode(cell):
+    if cell.ctype==0:
+        raise Exception('Nothing in cell')
+    elif cell.ctype==4:
+        if cell.value==1:
+            return True
+        else:
+            return False
+    elif cell.ctype==2:
+        if int(cell.value)==1:
+            return True
+        else:
+            return False
+    elif cell.ctype==1:
+        if str(cell.value).lower()=='yes':
+            return True
+        else:
+            return False
+        
+    
+
+
+
+    
