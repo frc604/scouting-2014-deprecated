@@ -329,6 +329,8 @@ def importData(path, regional):
     with open('../BackEnd/Data/Raw/'+_in['regional']+'_team_index.604', 'wb') as _file:
         pickle.dump(teams_in_reigonal,_file)
 
+"""Excel import and export"""
+
 def export(path, regional):
     """Takes a path (with slash at end) and exports to that path. Filename will be scouting.xls"""
     out = xlwt.Workbook()
@@ -432,6 +434,7 @@ def importXls(path, reigonal):
                 match['teleop']['comments']=''
             _input(match)
 def bool_decode(cell):
+    """Helper function, nothing to see here"""
     if cell.ctype==0:
         raise Exception('Nothing in cell')
     elif cell.ctype==4:
@@ -447,11 +450,60 @@ def bool_decode(cell):
     elif cell.ctype==1:
         if str(cell.value).lower()=='yes':
             return True
+        elif str(cell.value).lower()=='true':
+            return True
         else:
             return False
-        
-    
-
-
-
-    
+def exportProcessed(path, reigonal):
+    """Exports getTeam data to given path (with the slash). File wil be called output.xls"""
+    out = xlwt.Workbook()
+    sheet = out.addsheet('output')
+    try:
+        with open('../BackEnd/Data/Raw/'+str(regional)+'_team_index.604', 'rb') as _file:
+            teams = pickle.load(_file)'
+    except:
+        return
+    sheet.write(0,0,'shooting')
+    sheet.write(0,6,'assisting')
+    sheet.write(0,14,'auton')
+    sheet.write(1,0,'High goals made')
+    sheet.write(1,1,'High goal percentage')
+    sheet.write(1,2,'High goal number standard deviation')
+    sheet.write(1,3,'Low goals made')
+    sheet.write(1,4,'Low goal percentage')
+    sheet.write(1,5,'Low goal number standard deviation')
+    sheet.write(1,6,'Assists')
+    sheet.write(1,7,'cycle time')
+    sheet.write(1,8,'catches')
+    sheet.write(1,9,'catch percentage')
+    sheet.write(1,10,'catch number standard deviation')
+    sheet.write(1,11,'truss shots')
+    sheet.write(1,12,'truss success percentage')
+    sheet.write(1,13,'truss number standard deviation')
+    sheet.write(1,14,'auton shooting success percentage')
+    sheet.write(1,15,'auton hot shots to not hot shots')
+    sheet.write(1,16,'auton high shots to low shots')
+    sheet.write(1,17,'auton driving success percentage')
+    index=2
+    for team in teams:
+        processed=getTeam(team, reigonal)
+        sheet.write(index,0,processed['shooting'][0][0])
+        sheet.write(index,1,processed['shooting'][2][0])
+        sheet.write(index,2,processed['shooting'][0][1])
+        sheet.write(index,3,processed['shooting'][1][0])
+        sheet.write(index,4,processed['shooting'][2][1])
+        sheet.write(index,5,processed['shooting'][1][1])
+        sheet.write(index,6,processed['assist'][0][0])
+        sheet.write(index,7,processed['assist'][0][1])
+        sheet.write(index,8,processed['assist'][1][0])
+        sheet.write(index,9,processed['assist'][1][1])
+        sheet.write(index,10,processed['assist'][1][2])
+        sheet.write(index,11,processed['truss'][0])
+        sheet.write(index,12,processed['truss'][2])
+        sheet.write(index,13,processed['truss'][1])
+        sheet.write(index,14,processed['auton'][0])
+        sheet.write(index,15,processed['auton'][1])
+        sheet.write(index,16,processed['auton'][2])
+        sheet.write(index,17,processed['auton'][3])
+        index+=1
+    out.save(path+'output.xls')
